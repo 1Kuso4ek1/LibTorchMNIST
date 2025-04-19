@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(NumbersNN)
+project(LibTorchMNIST)
 
 include(FetchContent)
 
@@ -13,7 +13,6 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(libtorch)
 
-# Настройка проекта
 set(CMAKE_CXX_STANDARD 23)
 find_package(Torch REQUIRED PATHS ${libtorch_SOURCE_DIR})
 
