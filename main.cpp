@@ -3,12 +3,6 @@
 #include <Trainer.hpp>
 #include <Tester.hpp>
 
-#include <print>
-
-#include <torch/data/dataloader.h>
-#include <torch/nn/functional/loss.h>
-#include <torch/optim/sgd.h>
-
 // Some constants to play with
 const size_t epochs = 15;
 const size_t batchSize = 100;

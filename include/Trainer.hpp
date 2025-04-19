@@ -33,7 +33,38 @@ public:
             torch::load(optimizer, "optimizer.pt");
     }
 
-    void train();
+    void train()
+    {
+        network->train();
+        network->to(global::device);
+
+        std::println("Training...");
+
+        for(int epoch = 0; epoch < config.epochs; epoch++)
+        {
+            at::Tensor loss{};
+
+            for(const auto& i : *loader)
+            {
+                auto data = i.data.view({ config.batchSize, -1 }).to(global::device);
+                auto target = i.target.to(global::device);
+
+                // Forward pass
+                auto output = network->forward(data);
+                loss = torch::nn::functional::cross_entropy(output, target);
+
+                // Backward pass
+                optimizer.zero_grad();
+                loss.backward();
+                optimizer.step();
+            }
+
+            std::println("Epoch: {}\tLoss: {}", epoch + 1, loss.item().toFloat());
+        }
+
+        torch::save(network, "model.pt");
+        torch::save(optimizer, "optimizer.pt");
+    }
 
 private:
     Loader loader;
